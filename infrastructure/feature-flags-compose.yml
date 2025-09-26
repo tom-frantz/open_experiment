@@ -1,62 +1,7 @@
-volumes:
-  pgdata:
-
+#
+# Open Feature + Provider (Flagsmith)
+#
 services:
-  db:
-    image: postgres:17
-    environment:
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: open_experiment
-    container_name: db
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-      - ./create_db.sql:/docker-entrypoint-initdb.d/create_db.sql
-    healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -d open_experiment -U postgres']
-      interval: 2s
-      timeout: 2s
-      retries: 20
-      start_period: 20s
-
-  db_admin:
-    image: adminer
-    restart: always
-    depends_on:
-      - db
-    ports:
-      - 8080:8080
-
-  #
-  # Open Telemetry + Monitoring (jaeger / prometheus)
-  #
-  collector:
-    container_name: collector
-    image: otel/opentelemetry-collector-contrib:latest
-    volumes:
-      - ./otel-collector-config.yml:/etc/otel-collector-config.yaml
-    command: --config=/etc/otel-collector-config.yaml
-    ports:
-      - "4317:4317"
-      - "4318:4318"
-
-
-  jaeger:
-    image: jaegertracing/all-in-one:latest
-    ports:
-      - "6831:6831/udp" # UDP port for Jaeger agent
-      - "16686:16686" # Web UI
-      - "14268:14268" # HTTP port for spans
-
-  prometheus:
-    image: prom/prometheus:latest
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
-    ports:
-      - "9090:9090"
-
-  #
-  # Open Feature + Provider (Flagsmith)
-  #
   flagsmith:
     container_name: flagsmith
     image: docker.flagsmith.com/flagsmith/flagsmith:latest
@@ -113,5 +58,3 @@ services:
     depends_on:
       - flagsmith
     command: run-task-processor
-
-

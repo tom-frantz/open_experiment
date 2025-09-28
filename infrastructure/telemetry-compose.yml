@@ -6,7 +6,7 @@ services:
     container_name: collector
     image: otel/opentelemetry-collector-contrib:latest
     volumes:
-      - ./infrastructure/otel-collector-config.yml:/etc/otel-collector-config.yaml
+      - ./otel-collector-config.yml:/etc/otel-collector-config.yaml
     command: --config=/etc/otel-collector-config.yaml
     ports:
       - "4317:4317"
@@ -22,6 +22,6 @@ services:
   prometheus:
     image: prom/prometheus:latest
     volumes:
-      - ./infrastructure/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
       - "9090:9090"

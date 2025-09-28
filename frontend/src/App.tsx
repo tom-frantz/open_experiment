@@ -2,9 +2,11 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import {useBooleanFlagDetails, useStringFlagDetails} from "@openfeature/react-sdk";
 
 function App() {
   const [count, setCount] = useState(0)
+    const flagValue = useStringFlagDetails("test_feature_one", "Not working")
 
   return (
     <>
@@ -21,6 +23,8 @@ function App() {
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
+          <p>Feature flag is {flagValue.value}</p>
+          <p>Feature flag error is {flagValue.errorMessage}</p>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>

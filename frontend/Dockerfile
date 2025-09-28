@@ -21,7 +21,7 @@ COPY . .
 
 ENV NODE_ENV=development
 ENV PORT=3000
-CMD bun run dev --port $PORT
+CMD bun run dev --port $PORT --host 0.0.0.0
 
 # copy node_modules from temp directory
 # then copy all (non-ignored) project files into the image

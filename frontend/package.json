@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@openfeature/flagsmith-client-provider": "^0.1.3",
+    "@openfeature/react-sdk": "^1.0.1",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
   },
